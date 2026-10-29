@@ -1,0 +1,30 @@
+name: Build AyazHUD
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Build mod
+        uses: gradle/gradle-build-action@v3
+        with:
+          arguments: build
+
+      - name: Upload JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: AyazHUD
+          path: build/libs/*.jar
